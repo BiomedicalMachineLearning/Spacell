@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: SpaCell
+Version: 0.0.1
+Summary: SpaCell Package
+Home-page: https://github.com/BiomedicalMachineLearning/Spacell.git
+Author: Xiao Tan, Andrew Su, Quan Nguyen
+Author-email: xiao.tan@uq.edu.au, a.su@uq.net.au, quan.nguyen@imb.uq.edu.au
+License: UNKNOWN
+Description: # SpaCell
+        
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown

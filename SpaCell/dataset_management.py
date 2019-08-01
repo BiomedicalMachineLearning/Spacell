@@ -13,7 +13,7 @@ from config import *
 
 class DataGenerator(keras.utils.Sequence):
     'Generates data for Keras'
-    def __init__(self, df, cm_df, le, batch_size=batch_size, dim=SIZE, n_channels=3,
+    def __init__(self, df, cm_df, le, batch_size=32, dim=(299,299), n_channels=3,
                  cm_len = None, n_classes=n_classes, shuffle=True, is_train=True):
         'Initialization'
         self.dim = dim
@@ -83,18 +83,18 @@ class DataGenerator(keras.utils.Sequence):
     
     def _load_cm(self, cm_temp):
         spot = self.df.loc[cm_temp, 'cm']
-        X_cm = self.cm_df.ix[spot, :-2].values
+        X_cm = self.cm_df.ix[spot, :-ADDITIONAL_COLUMN].values
         return X_cm
     
     def _load_label(self, lable_temp):
         spot = self.df.loc[lable_temp, 'cm']
-        y = self.cm_df.ix[spot, [-2]].values
+        y = self.cm_df.ix[spot, [-ADDITIONAL_COLUMN]].values
         y = self.le.transform(y)
         return to_categorical(y, num_classes=self.n_classes)
     
     def get_classes(self):
         if not self.is_train:
-            y = self.cm_df.iloc[:, [-2]].values
+            y = self.cm_df.iloc[:, [-ADDITIONAL_COLUMN]].values
             y = self.le.transform(y)
             return y
 
@@ -102,22 +102,24 @@ class DataGenerator(keras.utils.Sequence):
 
 if __name__ == '__main__':
     cm = pd.read_csv(os.path.join(DATASET_PATH, 'cm_norm.tsv'), header=0, sep='\t', index_col=0)
-    cm_age_G63A = cm.loc[cm['breed'] == 'B6SJLSOD1-G93A']
-    col_cm = list(cm_age_G63A.index)
+    if CONDITION_COLUMN:
+        cm_ = cm.loc[cm[CONDITION_COLUMN] == CONDITION]
+        cm = cm_
+    col_cm = list(cm.index)
     img_files = glob.glob(TILE_PATH+'/*/*.jpeg')
     sorted_img = []
     sorted_cm = []
     for img in img_files:
         id_img = os.path.splitext(os.path.basename(img))[0].replace("-", "_")
         for c in col_cm:
-            id_c = c.replace("x","_")
+            id_c = c.replace("x", "_")
             if id_img == id_c:
                 sorted_img.append(img)
                 sorted_cm.append(c)
 
-    sorted_cm_age_G63A = cm_age_G63A.reindex(sorted_cm)
+    cm = cm.reindex(sorted_cm)
     df = pd.DataFrame(data={'img':sorted_img,
         'cm':sorted_cm, 
-        'label':sorted_cm_age_G63A['age']})
+        'label':cm[LABEL_COLUMN]})
     df.to_csv(os.path.join(DATASET_PATH, 'dataset_age.tsv'), sep='\t')
-    sorted_cm_age_G63A.to_csv(os.path.join(DATASET_PATH, "cm_age.tsv"), sep='\t')
+    cm.to_csv(os.path.join(DATASET_PATH, "cm_age.tsv"), sep='\t')

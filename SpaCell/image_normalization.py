@@ -32,12 +32,12 @@ def do_tile(input_task):
     transformed = normalizer.transform(img_std)
     img = Image.fromarray(transformed)
     
-    cm = pd.read_csv(cm_path, header = 0, sep='\t', index_col=0)
+    cm = pd.read_csv(cm_path, header=0, sep='\t', index_col=0)
     cm = cm.transpose()
     spots_center_gen = spot_gen(cm)
     tile_out = os.path.join(TILE_PATH, sample)
     mkdirs(tile_out)
-    tile(img,spots_center_gen,tile_out,atm)
+    tile(img, spots_center_gen, tile_out, atm)
 
 
 if __name__ == '__main__':
@@ -45,8 +45,8 @@ if __name__ == '__main__':
     normalizer = staintools.StainNormalizer(method=NORM_METHOD)
     template_std = LuminosityStandardizer.standardize(np.array(template))
     normalizer.fit(template_std)
-    meta_mouse = pd.read_csv(META_PATH, header=0, sep='\t')
-    sample_name = list(meta_mouse.loc[:,'sample_name'])
+    meta_data = pd.read_csv(META_PATH, header=0, sep='\t')
+    sample_name = list(meta_data.loc[:, SAMPLE_COLUMN])
     # input_list = []
     for item in img_cm_gen(IMG_PATH, CM_PATH, sample_name):
         # input_list.append((sample, img_path, cm_path))

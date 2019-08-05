@@ -1,6 +1,5 @@
-<img width="1000" height="600" src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/logo.png> 
-
-# SpaCell
+<p align="center">
+<img width="1000" height="600" src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/logo.png>
 
 ## Introduction to SpaCell
 
@@ -64,11 +63,21 @@
 ## Results
 
 ### Classification of ALS disease stages
+<p align="center">
+<img width="400" height="350" src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/age_roc_combine.png> 
+<img width="400" height="350" src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/age_confusion_matrix_combine.png> 
+ 
+ ### Clustering for finding prostate cancer region
 
-<img src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/age_roc_combine.pdf> 
+<p align="center">
+<img src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/clustering_1.png> 
 
-<img src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/age_confusion_matrix_combine.pdf> 
+ ### Clustering for finding inflamed stromal 
+ 
+<p align="center">
+<img src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/clustering_2.png> 
 
+ 
 ## Dataset 
 For evaluating the algorithm, <a href="https://als-st.nygenome.org">ALS</a> dataset can be used.
 

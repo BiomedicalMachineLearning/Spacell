@@ -1,3 +1,5 @@
+<img width="1000" height="600" src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/logo.png> 
+
 # SpaCell
 
 ## Introduction to SpaCell
@@ -61,6 +63,11 @@
 
 ## Results
 
+### Classification of ALS disease stages
+
+<img src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/age_roc_combine.pdf> 
+
+<img src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/age_confusion_matrix_combine.pdf> 
 
 ## Dataset 
 For evaluating the algorithm, <a href="https://als-st.nygenome.org">ALS</a> dataset can be used.

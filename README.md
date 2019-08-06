@@ -3,9 +3,11 @@
 
 ## Introduction to SpaCell
 
-* **SpaCell** program is being developed for spatial transcriptomics dataset which include image data and RNA expression data.  
+* **SpaCell** program has been developed for spatial transcriptomics dataset, which include image data and RNA expression data.  
 
-* **SpaCell** implements (deep) neural network models like autoencoder, convolutional neural network to find cell types or predict disease stages.  
+* **SpaCell** implements (deep) neural network (NN) models like autoencoder, convolutional neural network (residual net), and pre-trained model for transfer-learning to train models for identifying cell types or predicting disease stages. The NN integrates millions of pixel intensity values with thousands of gene expression measurements from spatially-barcoded spots in a tissue.
+
+* **SpaCell** has a comprehensive data preprocessing workflow to filter, combine, and normalise images and gene expression matrices
 
 ## Installation
 
@@ -24,7 +26,7 @@
 
 ```git clone https://github.com/BiomedicalMachineLearning/Spacell.git```
 
-2.1 Install from PyPi  
+2.2 Install from PyPi  
 
 ```pip install SpaCell```
 
@@ -45,7 +47,7 @@
 
 ```python count_matrix_normalization.py```
 
-### 3. Generate Dataset
+### 3. Generate paired image and gene count training dataset
 
 ```python dataset_management.py```
 
@@ -84,7 +86,7 @@ For evaluating the algorithm, <a href="https://als-st.nygenome.org">ALS</a> data
 ## Citing Spacell 
 If you find Spacell useful in your research, please consider citing:
 
-<a href=" ">Xiao Tan, Andrew T Su, Quan Nguyen (2019). SpaCell: integrating tissue morphology and spatial gene expression to predict disease cells.</a>
+<a href=" ">Xiao Tan, Andrew T Su, Quan Nguyen (2019). SpaCell: integrating tissue morphology and spatial gene expression to predict disease cells.</a> (Manuscript is currently under-review)
 
 ## The team
 The software is under active development by the Biomedical Machine Learning group at Institute for Molecular Biology (IMB, University of Queensland).   

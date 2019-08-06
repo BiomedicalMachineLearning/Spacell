@@ -26,7 +26,7 @@
 
 2.1 Install from PyPi  
 
-```pip install ....```
+```pip install SpaCell```
 
 ## Usage
 

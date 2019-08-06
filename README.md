@@ -81,7 +81,7 @@
 
  
 ## Dataset 
-For evaluating the algorithm, <a href="https://als-st.nygenome.org">ALS</a> dataset can be used.
+For evaluating the algorithm, <a href="https://als-st.nygenome.org">ALS (Amyotrophic lateral sclerosis)</a> dataset and <a href="https://doi.org/10.1038/s41467-018-04724-5">prostate cancer</a> dataset can be used.
 
 ## Citing Spacell 
 If you find Spacell useful in your research, please consider citing:

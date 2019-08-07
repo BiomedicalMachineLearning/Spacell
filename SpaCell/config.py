@@ -36,5 +36,5 @@ color_map = ['#ff8aff', '#6fc23f', '#af63ff', '#eaed00', '#f02449', '#00dbeb', '
 # classification model config
 n_classes = 4
 batch_size = 32
-epochs = 1
+epochs = 10
 train_ratio = 0.7

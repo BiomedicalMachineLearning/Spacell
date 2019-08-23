@@ -5,7 +5,7 @@
 
 * **SpaCell** has been developed for analysing spatial transcriptomics (ST) data, which include imaging data of tissue sections and RNA expression data across the tissue sections. The ST data add a novel spatial dimension to the traditional gene expression data, which derive from dissociated cells. The ST data also add molecular information to a typical histological image. Spacell is desinged to integrates the two histopathological imaging and sequencing fields, with the ultimate aim to discover novel biology and to improve histopathological diagnosis.  
 
-* **SpaCell** implements (deep) neural network (NN) models like autoencoder, convolutional neural network (residual net), and pre-trained models with transfer-learning to identify cell types or predict disease stages. The NN integrates millions of pixel intensity values with thousands of gene expression measurements from spatially-barcoded spots in a tissue. Prior to model training, Spacell enables users for implement a comprehensive data preprocessing workflow to filter, combine, and normalise images and gene expression matrices. 
+* **SpaCell** implements (deep) neural network (NN) models likea multi-input and multi-output autoencoder, transfer learning with or without fine tuning and residual and separable convolutional NN architectures to identify cell types or to predict disease stages. The NN integrates millions of pixel intensity values with thousands of gene expression measurements from spatially-barcoded spots in a tissue. Prior to model training, SpaCell enables users for implement a comprehensive data preprocessing workflow to filter, combine, and normalise images and gene expression matrices. 
 
 ## Installation
 
@@ -78,7 +78,7 @@
 <p align="center">
 <img src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/clustering_2.png> 
 
-### Clustering for finding cell types in mouse olfactory bulb (HDST benchmark dataset)
+### Clustering for anatomical regions in mouse olfactory bulb (High density ST dataset)
 
 <p align="center">
 <img src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/clustering_3.png> 

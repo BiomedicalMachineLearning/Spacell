@@ -66,13 +66,19 @@
 <p align="center">
 <img width="400" height="350" src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/age_roc_combine.png> 
 <img width="400" height="350" src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/age_confusion_matrix_combine.png> 
+
+### Clustering for finding cell types in mouse olfactory bulb (HDST benchmark dataset)
+
+<p align="center">
+<img src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/clustering_3.png> 
  
- ### Clustering for finding prostate cancer region
+ 
+### Clustering for finding prostate cancer region
 
 <p align="center">
 <img src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/clustering_1.png> 
 
- ### Clustering for finding inflamed stromal 
+### Clustering for finding inflamed stromal 
  
 <p align="center">
 <img src=https://github.com/BiomedicalMachineLearning/Spacell/blob/master/figure/clustering_2.png> 

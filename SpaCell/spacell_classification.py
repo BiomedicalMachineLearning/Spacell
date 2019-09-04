@@ -27,6 +27,6 @@ if __name__ == '__main__':
                                   		steps_per_epoch=len(train_gen),
                                   		epochs=epochs)
 	y_pred = parallel_model_combine.predict_generator(generator=test_gen, verbose=1)
-	y_true = sorted_cm.iloc[test_index,[-ADDITIONAL_COLUMN]].values
+	y_true = sorted_cm.loc[test_index, LABEL_COLUMN].values
 	y_true = label_encoder.transform(y_true)
 	model_eval(y_pred, y_true, class_list=class_list)

@@ -16,7 +16,11 @@
 [TensorFlow 1.4.0]
 [scikit-learn 0.18]
 [keras 2.2.4]
-[staintools ]
+[seaborn 0.9.0]
+[pandas 0.25.0]
+[pillow 6.1.0]
+[python-spams 2.6.1]
+[staintools 2.1.2]
 ```
 2. Installation:    
 
@@ -27,6 +31,14 @@
 2.2 Install from PyPi  
 
 ```pip install SpaCell```
+
+To meet the requirements, we recommend user to use conda environment:
+
+```
+conda create -y -name spacell python==3.7
+conda install -y -name spacell -c conda-forge --file requirements.txt
+conda activate spacell
+```
 
 ## Usage
 

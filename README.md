@@ -72,6 +72,13 @@ conda activate spacell
 *  `-e` is number of training epochs
 *  `-k` is number of expected clusters
 
+### 6. Clustering Validation and Quantification
+
+```python spacell_validation.py -d /path/to/data -a /path/to/annotation.png -w /path/to/wsi.jpeg -m /path/to/affine_tranformation_matrix.txt -o /path/to/output -k path/to/clustering/result -c red```
+
+* `-c` is annotation colour 
+* `-t` indicates that annotations are not closed paths, so spacell with try to close the paths
+
 ## Results
 
 ### Classification of ALS disease stages

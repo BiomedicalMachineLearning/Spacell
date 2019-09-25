@@ -17,6 +17,7 @@
 [scikit-learn 0.18]
 [keras 2.2.4]
 [seaborn 0.9.0]
+[opencv 4.1.1]
 [pandas 0.25.0]
 [pillow 6.1.0]
 [python-spams 2.6.1]
@@ -74,10 +75,13 @@ conda activate spacell
 
 ### 6. Clustering Validation and Quantification
 
-```python spacell_validation.py -d /path/to/data -a /path/to/annotation.png -w /path/to/wsi.jpeg -m /path/to/affine_tranformation_matrix.txt -o /path/to/output -k path/to/clustering/result -c red```
+```python spacell_validation.py -d /path/to/data -a annotation.png -w wsi.jpeg -m affine_tranformation_matrix.txt -o output_folder -k clustering_predictions.tsv -c annotation_colour_range```
 
-* `-c` is annotation colour 
+* `-c` is annotation colour range thresholds - blue_low green_low red_low blue_upper green_upper red_low
 * `-t` indicates that annotations are not closed paths, so spacell with try to close the paths
+* `-f` downscale factor if the input whole slide image has already been downscaled
+* `-s` spot size, optional, usually set automatically
+
 
 ## Results
 

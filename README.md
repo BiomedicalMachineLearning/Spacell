@@ -112,7 +112,7 @@ For evaluating the algorithm, <a href="https://als-st.nygenome.org">ALS (Amyotro
 ## Citing Spacell 
 If you find Spacell useful in your research, please consider citing:
 
-<a href=" ">Xiao Tan, Andrew T Su, Quan Nguyen (2019). SpaCell: integrating tissue morphology and spatial gene expression to predict disease cells.</a> (Manuscript is currently under-review)
+<a href=" ">Xiao Tan, Andrew T Su, Tran M, Quan Nguyen (2019). SpaCell: integrating tissue morphology and spatial gene expression to predict disease cells.</a> (Manuscript is currently under-review)
 
 ## The team
 The software is under active development by the Biomedical Machine Learning group at Institute for Molecular Biology (IMB, University of Queensland).   

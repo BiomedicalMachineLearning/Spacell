@@ -64,7 +64,7 @@ conda activate spacell
 
 ### 4. Classification
 
-```python spacell_classification,py```
+```python spacell_classification.py```
 
 ### 5. Clustering
 
@@ -112,10 +112,10 @@ For evaluating the algorithm, <a href="https://als-st.nygenome.org">ALS (Amyotro
 ## Citing Spacell 
 If you find Spacell useful in your research, please consider citing:
 
-<a href=" ">Xiao Tan, Andrew T Su, Tran M, Quan Nguyen (2019). SpaCell: integrating tissue morphology and spatial gene expression to predict disease cells.</a> (Manuscript is currently under-review)
+<a href=" ">Xiao Tan, Andrew T Su, Minh Tran, Quan Nguyen (2019). SpaCell: integrating tissue morphology and spatial gene expression to predict disease cells.</a> (Manuscript is currently under-review)
 
 ## The team
-The software is under active development by the Biomedical Machine Learning group at Institute for Molecular Biology (IMB, University of Queensland).   
+The software is under active development by the Biomedical Machine Learning Lab at the Institute for Molecular Bioscience (IMB, University of Queensland).   
 
-Please contact Dr Quan Nguyen (quan.nguyen@uq.edu.au), Andrew Su (a.su@uq.edu.au), and Xiao Tan (xiao.tan@uq.edu.au) for issues, suggestion, and collaboration.
+Please contact Dr Quan Nguyen (quan.nguyen@uq.edu.au), Andrew Su (a.su@uq.edu.au), and Xiao Tan (xiao.tan@uq.edu.au) for issues, suggestions, and we very welcome collaboration opportunities.
  

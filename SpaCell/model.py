@@ -1,21 +1,20 @@
-from keras.layers import Dense, GlobalAveragePooling2D, Input, concatenate, Dropout, Lambda
-from keras.losses import mse, binary_crossentropy
-from keras.models import Model, Sequential
-from keras.optimizers import Adam
-from keras.applications import xception
+from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, Input, concatenate, Dropout, Lambda
+from tensorflow.keras.applications.inception_v3 import InceptionV3, preprocess_input as preprocess_inception
+from tensorflow.keras.applications.xception import Xception, preprocess_input as preprocess_xception
+from tensorflow.keras.losses import mse, binary_crossentropy
+from tensorflow.keras.models import Model, Sequential
+from tensorflow.keras.optimizers import Adam
 import os
-from keras.utils import multi_gpu_model
-from keras.applications.xception import Xception
+from tensorflow.keras.utils import multi_gpu_model
+from tensorflow.keras.applications.xception import Xception
 from sklearn.metrics import confusion_matrix, roc_curve, auc
-from sklearn.model_selection import StratifiedKFold, train_test_split
-from sklearn.utils import class_weight
 import seaborn as sns
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from keras.applications.resnet50 import ResNet50, preprocess_input as preprocess_resnet, decode_predictions
-from keras import backend as K
+from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input as preprocess_resnet, decode_predictions
+from tensorflow.keras import backend as K
 
 
 class ResNet:
@@ -30,6 +29,42 @@ class ResNet:
         if self.data_format == "channels_first":
             x = x.transpose(0, 3, 1, 2)
         x = preprocess_resnet(x.astype(K.floatx()))
+        return self.model.predict(x, batch_size=self.batch_size)
+
+
+class Inception_V3:
+    """
+    pre-trained Inception_V3 model
+    """
+    __name__ = "Inception_V3"
+
+    def __init__(self, batch_size=1):
+        self.model = InceptionV3(include_top=False, weights='imagenet', pooling="avg")
+        self.batch_size = batch_size
+        self.data_format = K.image_data_format()
+
+    def predict(self, x):
+        if self.data_format == "channels_first":
+            x = x.transpose(0, 3, 1, 2)
+        x = preprocess_inception(x.astype(K.floatx()))
+        return self.model.predict(x, batch_size=self.batch_size)
+
+
+class Xception_imagenet:
+    """
+    pre-trained xception model
+    """
+    __name__ = "xception"
+
+    def __init__(self, batch_size=1):
+        self.model = Xception(include_top=False, weights='imagenet', pooling="avg")
+        self.batch_size = batch_size
+        self.data_format = K.image_data_format()
+
+    def predict(self, x):
+        if self.data_format == "channels_first":
+            x = x.transpose(0, 3, 1, 2)
+        x = preprocess_xception(x.astype(K.floatx()))
         return self.model.predict(x, batch_size=self.batch_size)
 
 
@@ -55,7 +90,7 @@ def features_gen(tile_and_infor, model, out_path):
     df.to_csv(out_path + '.tsv', header=True, index=False, sep="\t")
 
 
-def autoencoder(n_input):
+def autoencoder(n_input, loss='mean_squared_error'):
     '''
     model.fit(x_train, x_train, batch_size = 32, epochs = 500)
     bottleneck_representation = encoder.predict(x_train)
@@ -72,7 +107,7 @@ def autoencoder(n_input):
     model.add(Dense(256,       activation='relu'))
     model.add(Dense(512,       activation='relu'))
     model.add(Dense(n_input,   activation='sigmoid'))
-    model.compile(loss = 'mean_squared_error', optimizer = Adam())
+    model.compile(loss=loss, optimizer=Adam())
     encoder = Model(model.input, model.get_layer('bottleneck').output)
     return model, encoder
 
@@ -131,7 +166,7 @@ def vae(original_dim, intermediate_dim=512, latent_dim=20):
     return vae, encoder
 
 
-def combine_ae(ge_dim, tfv_dim):
+def combine_ae(ge_dim, tfv_dim, loss='mean_squared_error'):
     '''
     combine_ae.fit([X_ge, X_tfv],
                    [X_ge, X_tfv],
@@ -176,8 +211,8 @@ def combine_ae(ge_dim, tfv_dim):
 
     # Compile Autoencoder
     autoencoder.compile(optimizer='adam',
-                        loss={'Decoder_ge': 'mean_squared_error',
-                              'Decoder_tfv': 'mean_squared_error'})
+                        loss={'Decoder_ge': loss,
+                              'Decoder_tfv': loss})
     return autoencoder, encoder
 
 
@@ -185,17 +220,28 @@ def combine_ae(ge_dim, tfv_dim):
 def st_comb_nn(tile_shape, cm_shape, output_shape):
     #### xception base for tile
     tile_input = Input(shape=tile_shape, name = "tile_input")
-    xception_base = Xception(input_tensor=tile_input, weights='imagenet', include_top=False)
-    x_tile = xception_base.output
+    resnet_base = ResNet50(input_tensor=tile_input, weights='imagenet', include_top=False)
+    stage_5_start = resnet_base.get_layer("res5a_branch2a")
+    for i in range(resnet_base.layers.index(stage_5_start)):
+        resnet_base.layers[i].trainable = False
+
+    x_tile = resnet_base.output
     x_tile = GlobalAveragePooling2D()(x_tile)
+    x_tile = Dropout(0.5)(x_tile)
     x_tile = Dense(512, activation='relu', name="tile_fc")(x_tile)
     #### NN for count matrix
     cm_input = Input(shape=cm_shape, name="count_matrix_input")
-    x_cm = Dense(512, activation='relu', name="cm_fc")(cm_input)
+    x_cm = Dropout(0.5)(x_tile)
+    x_cm = Dense(512, activation='relu', name="cm_fc")(x_cm)
     #### merge
     merge = concatenate([x_tile, x_cm], name="merge_tile_cm")
+    merge = Dropout(0.5)(merge)
     merge = Dense(512, activation='relu', name="merge_fc_1")(merge)
-    merge = Dense(128, activation='relu', name="merge_fc_2")(merge)
+    merge = Dropout(0.5)(merge)
+    merge = Dense(256, activation='relu', name="merge_fc_2")(merge)
+    merge = Dropout(0.5)(merge)
+    merge = Dense(128, activation='relu', name="merge_fc_3")(merge)
+    merge = Dropout(0.5)(merge)
     preds = Dense(output_shape, activation='softmax')(merge)
     ##### compile model
     model = Model(inputs=[tile_input, cm_input], outputs=preds)
@@ -207,11 +253,11 @@ def st_comb_nn(tile_shape, cm_shape, output_shape):
     return parallel_model, model
 
 
-def model_eval(y_pred, y_true, class_list):
+def model_eval(y_pred, y_true, class_list, prefix=""):
     y_true_onehot = np.zeros((len(y_true), len(class_list)))
     y_true_onehot[np.arange(len(y_true)), y_true] = 1
     y_pred_int = np.argmax(y_pred, axis=1)
-    confusion_matrix_age = confusion_matrix(y_true, y_pred_int)
+    cm = confusion_matrix(y_true, y_pred_int)
     plt.figure()
     color = ['blue', 'green', 'red', 'cyan']
     for i in range(len(class_list)):
@@ -225,14 +271,13 @@ def model_eval(y_pred, y_true, class_list):
     plt.ylabel('True Positive Rate')
     plt.title('roc_auc')
     plt.legend(loc="lower right")
-    plt.savefig('./age_roc_combine.pdf')
-    cm_plot = plot_confusion_matrix(confusion_matrix_age, classes = class_list)
+    plt.savefig('{}_roc.pdf'.format(prefix))
+    cm_plot = plot_confusion_matrix(cm, classes = class_list, prefix=prefix)
 
 
-def plot_confusion_matrix(cm, classes=None):
+def plot_confusion_matrix(cm, classes=None, prefix=""):
     #Normalise Confusion Matrix by dividing each value by the sum of that row
     cm = cm.astype('float')/cm.sum(axis = 1)[:, np.newaxis]
-    print(cm)
     #Make DataFrame from Confusion Matrix and classes
     cm_df = pd.DataFrame(cm, index = classes, columns = classes)
     #Display Confusion Matrix 
@@ -242,6 +287,62 @@ def plot_confusion_matrix(cm, classes=None):
     #Display axes labels
     plt.ylabel('True label', fontsize = 12)
     plt.xlabel('Predicted label', fontsize = 12)
-    plt.savefig('./age_confusion_matrix_combine.pdf')
+    plt.savefig('{}_confusion_matrix.pdf'.format(prefix))
     plt.tight_layout()
     return cm_plot
+
+
+def st_nn(input_shape, output_shape):
+    cm_input = Input(shape=(input_shape,), name="cm_input")
+    x_cm = Dropout(0.5)(cm_input)
+    # x_cm = BatchNormalization()(cm_input)
+    x_cm = Dense(512, activation='relu')(cm_input)  # kernel_regularizer=regularizers.l2(0.01)
+    x_cm = Dropout(0.5)(x_cm)
+    # x_cm = BatchNormalization()(x_cm)
+    x_cm = Dense(256, activation='relu', )(x_cm)
+    x_cm = Dropout(0.5)(x_cm)
+    # x_cm = BatchNormalization()(x_cm)
+    x_cm = Dense(128, activation='relu')(x_cm)
+    x_cm = Dropout(0.5)(x_cm)
+    preds = Dense(output_shape, activation='softmax')(x_cm)
+    ##### compile model
+    model = Model(inputs=cm_input, outputs=preds)
+    try:
+        parallel_model = multi_gpu_model(model, gpus=2, cpu_merge=False)
+        print("Training using multiple GPUs..")
+    except ValueError:
+        parallel_model = model
+        print("Training using single GPU or CPU..")
+    parallel_model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['accuracy'])
+    return parallel_model
+
+
+def st_cnn(tile_shape, output_shape):
+    tile_input = Input(shape=tile_shape, name="tile_input")
+    resnet_base = ResNet50(input_tensor=tile_input, weights='imagenet', include_top=False)
+    stage_5_start = resnet_base.get_layer("res5a_branch2a")
+    for i in range(resnet_base.layers.index(stage_5_start)):
+        resnet_base.layers[i].trainable = False
+
+    x_tile = resnet_base.output
+    x_tile = GlobalAveragePooling2D()(x_tile)
+    x_tile = Dropout(0.5)(x_tile)
+    x_tile = Dense(512, activation='relu', name="tile_fc_1")(x_tile)
+    x_tile = Dropout(0.5)(x_tile)
+    x_tile = Dense(256, activation='relu', name="tile_fc_2")(x_tile)
+    x_tile = Dropout(0.5)(x_tile)
+    x_tile = Dense(128, activation='relu', name="tile_fc_3")(x_tile)
+    x_tile = Dropout(0.5)(x_tile)
+    preds = Dense(output_shape, activation='softmax')(x_tile)
+    ##### compile model
+    model = Model(inputs=tile_input, outputs=preds)
+    try:
+        parallel_model = multi_gpu_model(model, gpus=2, cpu_relocation=True)
+        print("Training using multiple GPUs..")
+    except ValueError:
+        parallel_model = model
+        print("Training using single GPU or CPU..")
+    parallel_model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['accuracy'])
+    return parallel_model
+
+

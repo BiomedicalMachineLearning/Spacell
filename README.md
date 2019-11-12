@@ -37,13 +37,13 @@ cd Spacell
 conda env create -f requirements.yml
 ```
 
-To activate enviroment:
+To activate environment:
 
 ```
 conda activate SpaCell
 ```
 
-to exit enviroment:
+to exit environment:
 
 ```
 conda deactivate

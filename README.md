@@ -22,6 +22,7 @@
 [pillow 6.1.0]
 [python-spams 2.6.1]
 [staintools 2.1.2]
+...
 ```
 2. Installation:    
 
@@ -29,17 +30,28 @@
 
 ```git clone https://github.com/BiomedicalMachineLearning/Spacell.git```
 
+To meet the requirements, we recommend user to use [conda](https://docs.conda.io/projects/conda/en/latest/index.html) environment:
+
+```
+cd Spacell
+conda env create -f requirements.yml
+```
+
+To activate enviroment:
+
+```
+conda activate SpaCell
+```
+
+to exit enviroment:
+
+```
+conda deactivate
+```
+
 2.2 Install from PyPi  
 
 ```pip install SpaCell```
-
-To meet the requirements, we recommend user to use conda environment:
-
-```
-conda create -y -name spacell python==3.7
-conda install -y -name spacell -c conda-forge --file requirements.txt
-conda activate spacell
-```
 
 ## Usage
 

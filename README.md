@@ -26,32 +26,56 @@
 ```
 2. Installation:    
 
-2.1 Download from GitHub   
+2.1 Build from sources
 
-```git clone https://github.com/BiomedicalMachineLearning/Spacell.git```
-
-To meet the requirements, we recommend user to use [conda](https://docs.conda.io/projects/conda/en/latest/index.html) environment:
+To meet the requirements, we recommend user to use either (1) [conda](https://docs.conda.io/projects/conda/en/latest/index.html) environment:
 
 ```
+# Download SapCell from GitHub and install all required packages:
+git clone https://github.com/BiomedicalMachineLearning/Spacell.git
 cd Spacell
 conda env create -f requirements.yml
 ```
 
-To activate environment:
-
 ```
+# To activate environment:
 conda activate SpaCell
 ```
 
-to exit environment:
+```
+# To exit environment:
+conda deactivate
+```
+
+Or (2) [Docker](https://www.docker.com) container:
 
 ```
-conda deactivate
+# Downlaod Docker image
+docker pull biomedicalmachinelearning/spacell:latest
+```
+
+```
+# Run Docker container
+docker run \
+-it \
+-v /path/to/your/data:/home/Spacell/dataset/ \ # mount your local data directory to container
+biomedicalmachinelearning/spacell:latest
 ```
 
 2.2 Install from PyPi  
 
 ```pip install SpaCell```
+
+### Build Status
+Build Type               | Status                                                                                                                                                                                                                                                                                                                                        | Artifacts
+------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------
+**Ubuntu Linux 18.04**            | ![Build Status](http://ml-ci.amd.com:21096/job/tensorflow-rocm-release/badge/icon)                                                                                                                                                                        | [Conda](https://docs.conda.io/projects/conda/en/latest/index.html), [Docker](https://www.docker.com), [PyPI](https://pypi.org)
+**Centos Linux 7**            | ![Build Status](http://ml-ci.amd.com:21096/job/tensorflow-rocm-release/badge/icon)                                                                                                                                                              | [Conda](https://docs.conda.io/projects/conda/en/latest/index.html), [Docker](https://www.docker.com), [PyPI](https://pypi.org)
+**MacOS(Mojave)**            | ![Build Status](http://ml-ci.amd.com:21096/job/tensorflow-rocm-release/badge/icon)                                                                                                                                                                      | [Conda](https://docs.conda.io/projects/conda/en/latest/index.html), [Docker](https://www.docker.com), [PyPI](https://pypi.org)
+**MacOS(Catalina)**                | ![Build Status](http://ml-ci.amd.com:21096/job/tensorflow-rocm-release/badge/icon)                                                                                                                                                                  | [Conda](https://docs.conda.io/projects/conda/en/latest/index.html), [Docker](https://www.docker.com), [PyPI](https://pypi.org)
+**Windows 10**          | ![Build Status](http://ml-ci.amd.com:21096/job/tensorflow-rocm-release/badge/icon)                                                                                                                                                                    | [Docker](https://www.docker.com), [PyPI](https://pypi.org)
+
+\* `python-spams 2.6.1`, a dependence of `staintools 2.1.2`, is currently not avaliable on _**Windows 10**_ platform. We recommend _**Windows 10**_ user to use Docker container instead of Conda environment. 
 
 ## Usage
 

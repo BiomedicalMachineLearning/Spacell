@@ -26,7 +26,7 @@
 [pillow 6.1.0]
 [python-spams 2.6.1]
 [staintools 2.1.2]
-...
+[Others as specified in the requirements.yml file]
 ```
 2. Installation:    
 
@@ -58,6 +58,7 @@ conda deactivate
 
 ```
 # Download the SpaCell Docker image
+
 docker pull biomedicalmachinelearning/spacell:latest
 ```
 

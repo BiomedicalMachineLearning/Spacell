@@ -54,7 +54,7 @@ conda activate SpaCell
 conda deactivate
 ```
 
-Or (2) [Docker](https://www.docker.com) container:
+2.2 Build [Docker](https://www.docker.com) container:
 
 ```
 # Download the SpaCell Docker image
@@ -70,7 +70,7 @@ docker run \
 biomedicalmachinelearning/spacell:latest
 ```
 
-2.2 Install from PyPi  
+2.3 Install from PyPi  
 
 ```pip install SpaCell```
 

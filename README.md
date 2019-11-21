@@ -7,7 +7,7 @@
 
 * **SpaCell** implements (deep) neural network (NN) models like a multi-input and multi-output autoencoder, transfer learning with or without fine tuning and residual and separable convolutional NN architectures to identify cell types or to predict disease stages. The NN integrates millions of pixel intensity values with thousands of gene expression measurements from spatially-barcoded spots in a tissue. 
 
-* Prior to model training, SpaCell enables users for implement a comprehensive data preprocessing workflow to filter, combine, and normalise images and gene expression matrices. 
+* Prior to model training, **SpaCell** enables users for implement a comprehensive data preprocessing workflow to filter, combine, and normalise images and gene expression matrices. 
 
 * **SpaCell** allows to map histopathological annotation to the original, high-resolution whole-slide-images. The mapped annotion is then used for evaluating model prediction results, thereby comparing model performance with real-life pathological diagnosis. 
 

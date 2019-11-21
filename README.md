@@ -3,9 +3,13 @@
 
 ## Introduction to SpaCell
 
-* **SpaCell** has been developed for analysing spatial transcriptomics (ST) data, which include imaging data of tissue sections and RNA expression data across the tissue sections. The ST data add a novel spatial dimension to the traditional gene expression data, which derive from dissociated cells. The ST data also add molecular information to a typical histological image. Spacell is desinged to integrates the two histopathological imaging and sequencing fields, with the ultimate aim to discover novel biology and to improve histopathological diagnosis.  
+* **SpaCell** has been developed for analysing spatial transcriptomics (ST) data, which include imaging data of tissue sections and RNA expression data across the tissue sections. The ST data add a novel spatial dimension to the traditional gene expression data from dissociated cells. SpaCell is desinged to integrates the two histopathological imaging and sequencing fields, with the ultimate aim to discover novel biology and to improve histopathological diagnosis in a quantitative and automated way.  
 
-* **SpaCell** implements (deep) neural network (NN) models likea multi-input and multi-output autoencoder, transfer learning with or without fine tuning and residual and separable convolutional NN architectures to identify cell types or to predict disease stages. The NN integrates millions of pixel intensity values with thousands of gene expression measurements from spatially-barcoded spots in a tissue. Prior to model training, SpaCell enables users for implement a comprehensive data preprocessing workflow to filter, combine, and normalise images and gene expression matrices. 
+* **SpaCell** implements (deep) neural network (NN) models like a multi-input and multi-output autoencoder, transfer learning with or without fine tuning and residual and separable convolutional NN architectures to identify cell types or to predict disease stages. The NN integrates millions of pixel intensity values with thousands of gene expression measurements from spatially-barcoded spots in a tissue. 
+
+* Prior to model training, SpaCell enables users for implement a comprehensive data preprocessing workflow to filter, combine, and normalise images and gene expression matrices. 
+
+* **SpaCell** allows to map histopathological annotation to the original, high-resolution whole-slide-images. The mapped annotion is then used for evaluating model prediction results, thereby comparing model performance with real-life pathological diagnosis. 
 
 ## Installation
 
@@ -32,6 +36,7 @@ To meet the requirements, we recommend user to use either (1) [conda](https://do
 
 ```
 # Download SapCell from GitHub and install all required packages:
+
 git clone https://github.com/BiomedicalMachineLearning/Spacell.git
 cd Spacell
 conda env create -f requirements.yml
@@ -39,23 +44,26 @@ conda env create -f requirements.yml
 
 ```
 # To activate environment:
+
 conda activate SpaCell
 ```
 
 ```
 # To exit environment:
+
 conda deactivate
 ```
 
 Or (2) [Docker](https://www.docker.com) container:
 
 ```
-# Downlaod Docker image
+# Download the SpaCell Docker image
 docker pull biomedicalmachinelearning/spacell:latest
 ```
 
 ```
 # Run Docker container
+
 docker run \
 -it \
 -v /path/to/your/data:/home/Spacell/dataset/ \ # mount your local data directory to container
@@ -152,5 +160,5 @@ If you find Spacell useful in your research, please consider citing:
 ## The team
 The software is under active development by the Biomedical Machine Learning Lab at the Institute for Molecular Bioscience (IMB, University of Queensland).   
 
-Please contact Dr Quan Nguyen (quan.nguyen@uq.edu.au), Andrew Su (a.su@uq.edu.au), and Xiao Tan (xiao.tan@uq.edu.au) for issues, suggestions, and we very welcome collaboration opportunities.
+Please contact Dr Quan Nguyen (quan.nguyen@uq.edu.au), Andrew Su (a.su@uqconnect.edu.au), and Xiao Tan (xiao.tan@uqconnect.edu.au) for issues, suggestions, and we very welcome collaboration opportunities.
  
